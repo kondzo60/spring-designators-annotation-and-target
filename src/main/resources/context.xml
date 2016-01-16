@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+	<bean id="someBean" class="pl.bal.konrad.aop.SomeBean"></bean>
+	<bean id="loggingAspect" class="pl.bal.konrad.aop.LoggingAspect" />
+
+	<aop:config>
+		<aop:pointcut expression="@annotation(pl.bal.konrad.aop.BusinessMethod)"
+			id="bussinesMethod" />
+		<aop:pointcut expression="@target(pl.bal.konrad.aop.BusinnessClass)"
+			id="bussinesClass" />
+		<aop:aspect ref="loggingAspect">
+			<aop:before method="logExecution" pointcut-ref="bussinesClass" />
+		</aop:aspect>
+	</aop:config>
+
+</beans>
